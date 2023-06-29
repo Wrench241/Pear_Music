@@ -1,14 +1,7 @@
-import java.lang.reflect.Field;
-
-import javax.swing.Icon;
-
-import org.w3c.dom.events.EventException;
-
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -20,8 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 import screens.MainScreen;
 
@@ -61,7 +52,7 @@ public class App extends Application {
         campo2.setTranslateY(127);
         sign.setTranslateX(90);
         sign.setTranslateY(200);
-        btn.setTranslateX(200);
+        btn.setTranslateX(215);
         btn.setTranslateY(160);
         user.setTranslateX(55);
         user.setTranslateY(100);
@@ -73,31 +64,48 @@ public class App extends Application {
         Scene scene = new Scene(root, 300, 280, Color.AZURE);
         primaryStage.setScene(scene);
         primaryStage.show();
+        btn.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
 
-        try {
-            btn.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    if (campo.getText().equals("admin") && campo2.getText().equals("admin")) {
-                        MainScreen m = new MainScreen();
-                        StackPane root = new StackPane();
-                        primaryStage.setTitle("pear music");
-                        primaryStage.setScene(new Scene(root, 600, 500));
-                        primaryStage.centerOnScreen();
-                        primaryStage.show();
-                        
-                    } else {
-                        Alert alert = new Alert(AlertType.INFORMATION);
-                        alert.setTitle("Error");
-                        alert.setHeaderText(null);
-                        alert.setContentText("senha ou usuario errado.");
-                        alert.show();
+                if (campo.getText().equals("admin") && campo2.getText().equals("admin")) {
+                    Image loadingImage = new Image("loading.gif");
+                    ImageView loadingImageView = new ImageView(loadingImage);
+                    loadingImageView.setFitWidth(20);
+                    loadingImageView.setFitHeight(20);
+                    loadingImageView.setPreserveRatio(true);
+                    loadingImageView.setTranslateX(190);
+                    loadingImageView.setTranslateY(164);
+                    root.getChildren().add(loadingImageView);
+                    System.out.println("here");
+                    MainScreen m = new MainScreen();
+                    Stage s = new Stage();
+                    try {
+                        Thread thread = new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    Thread.sleep(2010);
+                                    System.out.println("execute");
+                                    new MainScreen().start(s);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                    System.exit(0);
+                                }
+                            }
+                        };
+                        thread.start();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
+                } else {
+                    Alert alert = new Alert(AlertType.INFORMATION);
+                    alert.setTitle("Error");
+                    alert.setHeaderText(null);
+                    alert.setContentText("senha ou usuario incorretos.");
+                    alert.show();
                 }
-            });
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+            }
+        });
     }
 }
