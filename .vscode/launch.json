@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MainScreen",
+            "request": "launch",
+            "mainClass": "screens.MainScreen",
+            "projectName": "javafx_618a9785"
+        },
+        {
+            "type": "java",
             "name": "Current File",
             "request": "launch",
             "mainClass": "${file}"

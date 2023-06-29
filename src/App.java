@@ -1,4 +1,5 @@
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Group;
@@ -86,8 +87,11 @@ public class App extends Application {
                             public void run() {
                                 try {
                                     Thread.sleep(2010);
-                                    System.out.println("execute");
-                                    new MainScreen().start(s);
+                                  
+                                    Platform.runLater(() -> {
+                                         primaryStage.close();
+                                         m.start(s);
+                                    });
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                     System.exit(0);
@@ -100,6 +104,7 @@ public class App extends Application {
                     }
                 } else {
                     Alert alert = new Alert(AlertType.INFORMATION);
+                    ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("icons/preview-256.png"));
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
                     alert.setContentText("senha ou usuario incorretos.");
