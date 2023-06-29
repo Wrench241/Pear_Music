@@ -27,13 +27,13 @@ public class App extends Application {
     public void start(Stage primaryStage) {
 
         Label lb = new Label("");
-        Image img = new Image("apple-music-logo-circle-png-28.png");
+        Image img = new Image("icons/apple-music-logo-circle-png-28.png");
         ImageView view = new ImageView(img);
         view.setFitWidth(50);
         view.setFitHeight(50);
         view.setPreserveRatio(true);
         lb.setGraphic(view);
-        primaryStage.getIcons().add(new Image("preview-256.png"));
+        primaryStage.getIcons().add(new Image("icons/preview-256.png"));
         primaryStage.setResizable(false);
         primaryStage.setTitle("pear music");
         TextField campo = new TextField();
@@ -69,7 +69,7 @@ public class App extends Application {
             public void handle(ActionEvent event) {
 
                 if (campo.getText().equals("admin") && campo2.getText().equals("admin")) {
-                    Image loadingImage = new Image("loading.gif");
+                    Image loadingImage = new Image("icons/loading.gif");
                     ImageView loadingImageView = new ImageView(loadingImage);
                     loadingImageView.setFitWidth(20);
                     loadingImageView.setFitHeight(20);
