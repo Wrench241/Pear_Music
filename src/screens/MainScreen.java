@@ -31,7 +31,7 @@ public class MainScreen extends Application {
     }
 
     public Button next = new Button();
-    public Button player = new Button();
+    public Button player = new Button("play");
     public Button back = new Button();
     public Label soungLabel = new Label("label");
 
@@ -116,9 +116,48 @@ public class MainScreen extends Application {
                             @Override
                             public void handle(ActionEvent event) {
 
-                                System.out.print("working");
+                                System.out.println("next ");
 
                                 controller.nextSound();
+                                m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
+                                root.getChildren().remove(m.soungLabel);
+                                root.getChildren().add(m.soungLabel);
+                            }
+
+                        });
+
+                        m.player.setOnAction(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+                                if (m.player.getText().equals("play")) {
+                                    controller.play();
+                
+                                    m.player.setText("pause");
+                                     System.out.println("player ");
+                               
+                                } else if (m.player.getText().equals("pause")){
+                                    controller.pause();
+            
+                                    System.out.println("pause");
+                                
+                                }
+                               
+
+                                controller.play();
+
+                                root.getChildren().remove(m.soungLabel);
+                                root.getChildren().add(m.soungLabel);
+                            }
+
+                        });
+                        back.setOnAction(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+
+                                System.out.println("player ");
+
                                 m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
                                 root.getChildren().remove(m.soungLabel);
                                 root.getChildren().add(m.soungLabel);

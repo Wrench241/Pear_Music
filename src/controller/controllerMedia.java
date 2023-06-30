@@ -62,6 +62,7 @@ public class controllerMedia implements Initializable {
     public void pause() {
 
         mediaPlayer.stop();
+        mediaPlayer.stop();
     }
 
     public void nextSound() {
