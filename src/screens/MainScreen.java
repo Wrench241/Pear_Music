@@ -33,7 +33,7 @@ public class MainScreen extends Application {
     public Button next = new Button();
     public Button player = new Button("play");
     public Button back = new Button();
-    public Label soungLabel = new Label("label");
+    public Label soungLabel = new Label("");
 
     @Override
     public void start(Stage secoundStage) {
@@ -108,8 +108,12 @@ public class MainScreen extends Application {
                         m.player.setTranslateX(385);
                         m.player.setTranslateY(2);
                         m.soungLabel.setTranslateY(233);
+                        AnchorPane an = new AnchorPane();
+                        an.getChildren().add(pane);
+                        an.setBottomAnchor(pane, 0.0);
+                      
                         pane.getChildren().addAll(m.next, m.player, m.back);
-                        root.getChildren().addAll(lb, pane, m.soungLabel);
+                        root.getChildren().addAll(an, lb, m.soungLabel);
 
                         m.next.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -132,7 +136,7 @@ public class MainScreen extends Application {
                             public void handle(ActionEvent event) {
                                 if (m.player.getText().equals("play")) {
                                     controller.play();
-                
+                                    m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
                                     m.player.setText("pause");
                                      System.out.println("player ");
                                
@@ -151,12 +155,14 @@ public class MainScreen extends Application {
                             }
 
                         });
-                        back.setOnAction(new EventHandler<ActionEvent>() {
+                        m.back.setOnAction(new EventHandler<ActionEvent>() {
 
                             @Override
                             public void handle(ActionEvent event) {
+                                controller.previousSound();
 
-                                System.out.println("player ");
+
+                                System.out.println("back ");
 
                                 m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
                                 root.getChildren().remove(m.soungLabel);

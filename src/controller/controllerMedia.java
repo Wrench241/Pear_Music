@@ -53,6 +53,12 @@ public class controllerMedia implements Initializable {
         mediaPlayer = new MediaPlayer(midia);
 
     }
+    public static void revlist(ArrayList<File> list){
+        ArrayList<File> result = new ArrayList<>();
+        for (int i = list.size() + 1; i >=0; i--){
+            result.add((File) list.get(i));
+        }
+    }
     
     public void play() {
 
@@ -85,7 +91,20 @@ public class controllerMedia implements Initializable {
     }
 
     public void previousSound() {
-
+        if (soundNumber < soungs.size() + 1) {
+            soundNumber--;
+            mediaPlayer.stop();
+            midia = new Media(soungs.get(soundNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(midia);
+            play();
+        } else {
+             soundNumber = 0;
+            mediaPlayer.stop();
+            midia = new Media(soungs.get(soundNumber).toURI().toString());
+            mediaPlayer = new MediaPlayer(midia);
+            m.next.setText(soungs.get(soundNumber).getName());
+            play();
+        }
     }
 
     public void beginTimer() {
