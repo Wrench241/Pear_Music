@@ -39,12 +39,13 @@ public class controllerMedia implements Initializable {
     public void initialize() {
 
         soungs = new ArrayList<File>();
-        diretctoryFile = new File("music");
+        diretctoryFile = new File("src/music");
         files = diretctoryFile.listFiles();
 
         if (files != null) {
             for (File file : files) {
                 soungs.add(file);
+                System.out.println(file);
 
             }
         }
@@ -52,7 +53,7 @@ public class controllerMedia implements Initializable {
         mediaPlayer = new MediaPlayer(midia);
 
     }
-
+    
     public void play() {
 
         mediaPlayer.play();
@@ -63,14 +64,14 @@ public class controllerMedia implements Initializable {
         mediaPlayer.stop();
     }
 
-    public void nextSfound() {
+    public void nextSound() {
 
         if (soundNumber < soungs.size() - 1) {
             soundNumber++;
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(midia);
-            m.next.setText(soungs.get(soundNumber).getName());
+            
             play();
         } else {
              soundNumber= 0;
@@ -90,4 +91,13 @@ public class controllerMedia implements Initializable {
 
     }
 
+    public ArrayList<File> getSoungs() {
+        return soungs;
+    }
+
+    public int getSoundNumber() {
+        return soundNumber;
+    }
+
+    
 }

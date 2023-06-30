@@ -1,9 +1,12 @@
 package screens;
 
+import java.awt.Event;
+
 import javax.net.ssl.CertPathTrustManagerParameters;
 
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
 
+import controller.controllerMedia;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -26,10 +29,17 @@ public class MainScreen extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    public Button next, player, back;
+
+    public Button next = new Button();
+    public Button player = new Button();
+    public Button back = new Button();
+    public Label soungLabel = new Label("label");
 
     @Override
     public void start(Stage secoundStage) {
+        controllerMedia controller = new controllerMedia();
+        controller.initialize();
+        MainScreen m = new MainScreen();
         secoundStage.getIcons().add(new Image("icons/preview-256.png"));
         secoundStage.setTitle("pear music");
         Label lb = new Label("Pear Music 2023\u00A9");
@@ -53,60 +63,71 @@ public class MainScreen extends Application {
                         Label lb = new Label("Three Stage");
                         lb.setAlignment(Pos.CENTER_LEFT);
                         StackPane root = new StackPane();
-                    
+
                         Pane pane = new Pane();
                         pane.setPrefHeight(40);
                         pane.setPrefWidth(800);
-                        
+
                         pane.setMinSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
                         pane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-                        AnchorPane anchorpane = new AnchorPane();
-                        
+
                         pane.setStyle(
-                            "-fx-background-color: #D3D3D3;" 
-        
+                                "-fx-background-color: #D3D3D3;"
+
                         );
-                        root.setMargin(pane, new javafx.geometry.Insets(0,0,-550,0));
+                        root.setMargin(pane, new javafx.geometry.Insets(0, 0, -550, 0));
                         Scene scene = new Scene(root, 800, 600, javafx.scene.paint.Color.AZURE);
                         threeStage.setScene(scene);
                         threeStage.show();
-                        
-                      
-                        player.setStyle(
-                            "-fx-background-radius: 5em; " +
-                            "-fx-min-width: 36px; " +
-                            "-fx-min-height: 36px; " +
-                            "-fx-max-width: 36px; " +
-                            "-fx-max-height: 36px; "
-                        );
-                        
-                        next.setStyle(
-                            "-fx-background-radius: 5em; " +
-                            "-fx-min-width: 26px; " +
-                            "-fx-min-height: 26px; " +
-                            "-fx-max-width: 26px;" +
-                            "-fx-max-height: 26px; "
-                        );
-                     
-                        back.setStyle(
-                            "-fx-background-radius: 5em; " +
-                            "-fx-min-width: 26px; " +
-                            "-fx-min-height: 26px; " +
-                            "-fx-max-width: 26px; " +
-                            "-fx-max-heigth: 26px; "
-                        );
-                        
-                        back.setTranslateX(345);
-                        back.setTranslateY(5);
-                        next.setTranslateX(435);
-                        next.setTranslateY(5);
-                        player.setTranslateX(385);
-                        player.setTranslateY(2);
 
-                        pane.getChildren().addAll(next,player,back);
-                        root.getChildren().addAll(lb, pane);
-                        
+                        m.player.setStyle(
+                                "-fx-background-radius: 5em; " +
+                                        "-fx-min-width: 36px; " +
+                                        "-fx-min-height: 36px; " +
+                                        "-fx-max-width: 36px; " +
+                                        "-fx-max-height: 36px; ");
+
+                        m.next.setStyle(
+                                "-fx-background-radius: 5em; " +
+                                        "-fx-min-width: 26px; " +
+                                        "-fx-min-height: 26px; " +
+                                        "-fx-max-width: 26px;" +
+                                        "-fx-max-height: 26px; ");
+
+                        m.back.setStyle(
+                                "-fx-background-radius: 5em; " +
+                                        "-fx-min-width: 26px; " +
+                                        "-fx-min-height: 26px; " +
+                                        "-fx-max-width: 26px; " +
+                                        "-fx-max-heigth: 26px; ");
+
+                        m.back.setTranslateX(345);
+                        m.back.setTranslateY(5);
+                        m.next.setTranslateX(435);
+                        m.next.setTranslateY(5);
+                        m.player.setTranslateX(385);
+                        m.player.setTranslateY(2);
+                        m.soungLabel.setTranslateY(233);
+                        pane.getChildren().addAll(m.next, m.player, m.back);
+                        root.getChildren().addAll(lb, pane, m.soungLabel);
+
+                        m.next.setOnAction(new EventHandler<ActionEvent>() {
+
+                            @Override
+                            public void handle(ActionEvent event) {
+
+                                System.out.print("working");
+
+                                controller.nextSound();
+                                m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
+                                root.getChildren().remove(m.soungLabel);
+                                root.getChildren().add(m.soungLabel);
+                            }
+
+                        });
+
                     });
+
                 } catch (Exception e) {
                     System.out.println("oi");
                 }
