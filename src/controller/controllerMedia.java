@@ -38,9 +38,10 @@ public class controllerMedia implements Initializable {
 
     private javafx.util.Duration duration;
 
-   
+    private int lastNumber = 0;
 
     MainScreen m = new MainScreen();
+
     @Override
     public void initialize() {
 
@@ -59,47 +60,47 @@ public class controllerMedia implements Initializable {
         mediaPlayer = new MediaPlayer(midia);
 
     }
-    public static void revlist(ArrayList<File> list){
+
+    public static void revlist(ArrayList<File> list) {
         ArrayList<File> result = new ArrayList<>();
-        for (int i = list.size() + 1; i >=0; i--){
+        for (int i = list.size() + 1; i >= 0; i--) {
             result.add((File) list.get(i));
         }
     }
-    
+
     public void play() {
 
-       duration = mediaPlayer.getCurrentTime();
+        duration = mediaPlayer.getCurrentTime();
         mediaPlayer.seek(duration);
         mediaPlayer.play();
-    
+
     }
 
     public void pause() {
         duration = mediaPlayer.getCurrentTime();
         mediaPlayer.seek(duration);
         mediaPlayer.stop();
-        
+
     }
-   
 
     public void nextSound() {
 
         if (soundNumber < soungs.size() - 1) {
             m.player.setText("pause");
-            if (mediaPlayer.getStatus().equals(Status.PAUSED)){
+            if (mediaPlayer.getStatus().equals(Status.PAUSED)) {
                 m.player.setText("play");
 
             }
-            
+
             soundNumber++;
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(midia);
-            
+
             play();
         } else {
             m.player.setText("play");
-             soundNumber= 0;
+
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(midia);
@@ -109,14 +110,26 @@ public class controllerMedia implements Initializable {
     }
 
     public void previousSound() {
+
         if (soundNumber < soungs.size() + 1) {
-            soundNumber--;
+
+            if (soundNumber == -0) {
+                for (int i = 0; i < soungs.size(); i++) {
+                    lastNumber = i;
+
+                }
+                System.out.println(lastNumber +" last number");
+                soundNumber = lastNumber;
+                System.out.println(soundNumber+ " soundnumber");
+            } else {
+                soundNumber--;
+            }
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(midia);
             play();
         } else {
-             soundNumber = 0;
+            soundNumber = 0;
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());
             mediaPlayer = new MediaPlayer(midia);
@@ -137,5 +150,4 @@ public class controllerMedia implements Initializable {
         return soundNumber;
     }
 
-    
 }

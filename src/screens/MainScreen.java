@@ -67,6 +67,8 @@ public class MainScreen extends Application {
                         StackPane root = new StackPane();
 
                         Pane pane = new Pane();
+                        AnchorPane.setBottomAnchor(pane, (root.getHeight() - pane.getPrefHeight()) / 2);
+                        AnchorPane.setLeftAnchor(pane, (root.getWidth() - pane.getPrefWidth()) / 2);
                         pane.setPrefHeight(40);
                         pane.setPrefWidth(800);
 
@@ -113,7 +115,7 @@ public class MainScreen extends Application {
                         AnchorPane an = new AnchorPane();
                         an.getChildren().add(pane);
                         an.setBottomAnchor(pane, 0.0);
-                      
+
                         pane.getChildren().addAll(m.next, m.player, m.back);
                         root.getChildren().addAll(an, lb, m.soungLabel);
 
@@ -134,25 +136,24 @@ public class MainScreen extends Application {
                         });
 
                         m.player.setOnAction(new EventHandler<ActionEvent>() {
-                            
 
                             @Override
                             public void handle(ActionEvent event) {
                                 if (m.player.getText().equals("play")) {
-                                    
+
                                     controller.play();
-                                    m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
+                                    m.soungLabel
+                                            .setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
                                     m.player.setText("pause");
-                                     System.out.println("player ");
-                               
-                                } else if (m.player.getText().equals("pause")){
+                                    System.out.println("player ");
+
+                                } else if (m.player.getText().equals("pause")) {
                                     controller.pause();
                                     m.player.setText("play");
                                     System.out.println("pause");
-                                
+
                                 }
-                               
-                              
+
                             }
 
                         });
