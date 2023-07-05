@@ -4,6 +4,7 @@ import java.io.File;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Time;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.TimerTask;
@@ -12,6 +13,7 @@ import com.bumptech.glide.load.engine.Initializable;
 
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.Status;
 import screens.MainScreen;
 
 public class controllerMedia implements Initializable {
@@ -33,6 +35,10 @@ public class controllerMedia implements Initializable {
     private TimerTask task;
 
     private boolean running;
+
+    private javafx.util.Duration duration;
+
+   
 
     MainScreen m = new MainScreen();
     @Override
@@ -62,18 +68,29 @@ public class controllerMedia implements Initializable {
     
     public void play() {
 
+       duration = mediaPlayer.getCurrentTime();
+        mediaPlayer.seek(duration);
         mediaPlayer.play();
+    
     }
 
     public void pause() {
-
+        duration = mediaPlayer.getCurrentTime();
+        mediaPlayer.seek(duration);
         mediaPlayer.stop();
-        mediaPlayer.stop();
+        
     }
+   
 
     public void nextSound() {
 
         if (soundNumber < soungs.size() - 1) {
+            m.player.setText("pause");
+            if (mediaPlayer.getStatus().equals(Status.PAUSED)){
+                m.player.setText("play");
+
+            }
+            
             soundNumber++;
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());
@@ -81,6 +98,7 @@ public class controllerMedia implements Initializable {
             
             play();
         } else {
+            m.player.setText("play");
              soundNumber= 0;
             mediaPlayer.stop();
             midia = new Media(soungs.get(soundNumber).toURI().toString());

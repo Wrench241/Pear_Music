@@ -2,6 +2,8 @@ package screens;
 
 import java.awt.Event;
 
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaPlayer.*;
 import javax.net.ssl.CertPathTrustManagerParameters;
 
 import com.bumptech.glide.load.resource.bitmap.CenterInside;
@@ -120,6 +122,7 @@ public class MainScreen extends Application {
                             @Override
                             public void handle(ActionEvent event) {
 
+                                m.player.setText("pause");
                                 System.out.println("next ");
 
                                 controller.nextSound();
@@ -131,10 +134,12 @@ public class MainScreen extends Application {
                         });
 
                         m.player.setOnAction(new EventHandler<ActionEvent>() {
+                            
 
                             @Override
                             public void handle(ActionEvent event) {
                                 if (m.player.getText().equals("play")) {
+                                    
                                     controller.play();
                                     m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
                                     m.player.setText("pause");
@@ -142,16 +147,12 @@ public class MainScreen extends Application {
                                
                                 } else if (m.player.getText().equals("pause")){
                                     controller.pause();
-            
+                                    m.player.setText("play");
                                     System.out.println("pause");
                                 
                                 }
                                
-
-                                controller.play();
-
-                                root.getChildren().remove(m.soungLabel);
-                                root.getChildren().add(m.soungLabel);
+                              
                             }
 
                         });
@@ -159,9 +160,8 @@ public class MainScreen extends Application {
 
                             @Override
                             public void handle(ActionEvent event) {
+                                m.player.setText("pause");
                                 controller.previousSound();
-
-
                                 System.out.println("back ");
 
                                 m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
