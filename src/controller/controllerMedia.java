@@ -53,6 +53,7 @@ public class controllerMedia implements Initializable {
             for (File file : files) {
                 soungs.add(file);
                 System.out.println(file);
+                
 
             }
         }
@@ -148,6 +149,9 @@ public class controllerMedia implements Initializable {
 
     public int getSoundNumber() {
         return soundNumber;
+    }
+    public ArrayList getSoungList(){
+        return soungs;
     }
 
 }

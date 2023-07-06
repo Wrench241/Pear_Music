@@ -1,6 +1,9 @@
 package screens;
 
 import java.awt.Event;
+import java.awt.ScrollPane;
+import java.io.File;
+import java.util.ArrayList;
 
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.*;
@@ -11,6 +14,8 @@ import com.bumptech.glide.load.resource.bitmap.CenterInside;
 import controller.controllerMedia;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -18,7 +23,9 @@ import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
@@ -32,7 +39,9 @@ public class MainScreen extends Application {
         launch(args);
     }
 
+    
     public Button next = new Button();
+    
     public Button player = new Button("play");
     public Button back = new Button();
     public Label soungLabel = new Label("");
@@ -42,6 +51,25 @@ public class MainScreen extends Application {
         controllerMedia controller = new controllerMedia();
         controller.initialize();
         MainScreen m = new MainScreen();
+        Image img = new Image ("icons/pngwing.com (1).png");
+        Image imgback = new Image("icons/pngwing.com_2.png");
+        ImageView imageViewBack = new ImageView(imgback);
+        ImageView imageView = new ImageView(img);
+        Image imgplay = new Image("icons/pngwing.com.png");
+        ImageView imagePlayView = new ImageView(imgplay);
+        Image imgPause = new Image("icons/pngwing.com (4).png");
+        ImageView imagePauseView = new ImageView(imgPause);
+        imagePlayView.setFitHeight(20);
+        imagePlayView.setFitWidth(20);
+        imageView.setFitHeight(20);
+        imageView.setFitWidth(20);
+        imageViewBack.setFitHeight(20);
+        imageViewBack.setFitWidth(20);
+        imagePauseView.setFitHeight(20);
+        imagePauseView.setFitWidth(20);
+        m.next.setGraphic(imageView);
+        m.player.setGraphic(imagePlayView);
+        m.back.setGraphic(imageViewBack);
         secoundStage.getIcons().add(new Image("icons/preview-256.png"));
         secoundStage.setTitle("pear music");
         Label lb = new Label("Pear Music 2023\u00A9");
@@ -67,8 +95,24 @@ public class MainScreen extends Application {
                         StackPane root = new StackPane();
 
                         Pane pane = new Pane();
-                        AnchorPane.setBottomAnchor(pane, (root.getHeight() - pane.getPrefHeight()) / 2);
-                        AnchorPane.setLeftAnchor(pane, (root.getWidth() - pane.getPrefWidth()) / 2);
+                        ListView<String> listView = new ListView<>();
+                 
+                        ObservableList<String> items = FXCollections.observableArrayList(
+                          
+                        controller.getSoungs().get(1).getName(),
+                        controller.getSoungs().get(2).getName(),
+                        controller.getSoungs().get(3).getName()
+                         
+                        );
+
+                        listView.setItems(items);
+                        Pane vb = new Pane(listView);
+                        listView.setPrefHeight(350);
+                        listView.setPrefWidth(150);
+                        vb.setPrefHeight(350);
+                        vb.setPrefWidth(150);
+                        AnchorPane an = new AnchorPane();
+                       
                         pane.setPrefHeight(40);
                         pane.setPrefWidth(800);
 
@@ -112,18 +156,21 @@ public class MainScreen extends Application {
                         m.player.setTranslateX(385);
                         m.player.setTranslateY(2);
                         m.soungLabel.setTranslateY(233);
-                        AnchorPane an = new AnchorPane();
+                       
                         an.getChildren().add(pane);
-                        an.setBottomAnchor(pane, 0.0);
-
+                       
+                        
                         pane.getChildren().addAll(m.next, m.player, m.back);
-                        root.getChildren().addAll(an, lb, m.soungLabel);
+                        root.getChildren().add(an);
+                        root.getChildren().addAll(lb, m.soungLabel);
+                        root.getChildren().addAll( vb, pane);
+                     
 
                         m.next.setOnAction(new EventHandler<ActionEvent>() {
 
                             @Override
                             public void handle(ActionEvent event) {
-
+                                m.player.setGraphic(imagePauseView);
                                 m.player.setText("pause");
                                 System.out.println("next ");
 
@@ -144,11 +191,13 @@ public class MainScreen extends Application {
                                     controller.play();
                                     m.soungLabel
                                             .setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
+                                    m.player.setGraphic(imagePauseView);
                                     m.player.setText("pause");
                                     System.out.println("player ");
 
                                 } else if (m.player.getText().equals("pause")) {
                                     controller.pause();
+                                    m.player.setGraphic(imagePlayView);
                                     m.player.setText("play");
                                     System.out.println("pause");
 
@@ -161,6 +210,7 @@ public class MainScreen extends Application {
 
                             @Override
                             public void handle(ActionEvent event) {
+                                m.player.setGraphic(imagePauseView);
                                 m.player.setText("pause");
                                 controller.previousSound();
                                 System.out.println("back ");
