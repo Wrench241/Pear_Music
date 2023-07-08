@@ -96,14 +96,13 @@ public class MainScreen extends Application {
 
                         Pane pane = new Pane();
                         ListView<String> listView = new ListView<>();
-                 
-                        ObservableList<String> items = FXCollections.observableArrayList(
-                          
-                        controller.getSoungs().get(1).getName(),
-                        controller.getSoungs().get(2).getName(),
-                        controller.getSoungs().get(3).getName()
-                         
-                        );
+
+                        ObservableList<String> items =FXCollections.observableArrayList();
+                        for (int i =0; i< controller.getSoungs().size(); i++){
+                        
+                        items.add(controller.getSoungs().get(i).getName());
+                        
+                        }
 
                         listView.setItems(items);
                         Pane vb = new Pane(listView);
