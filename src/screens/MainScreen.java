@@ -5,6 +5,7 @@ import java.awt.ScrollPane;
 import java.io.File;
 import java.util.ArrayList;
 
+import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaPlayer.*;
 import javax.net.ssl.CertPathTrustManagerParameters;
@@ -39,9 +40,8 @@ public class MainScreen extends Application {
         launch(args);
     }
 
-    
     public Button next = new Button();
-    
+    public MediaPlayer mediaPlayer;
     public Button player = new Button("play");
     public Button back = new Button();
     public Label soungLabel = new Label("");
@@ -49,9 +49,10 @@ public class MainScreen extends Application {
     @Override
     public void start(Stage secoundStage) {
         controllerMedia controller = new controllerMedia();
-        controller.initialize();
+
         MainScreen m = new MainScreen();
-        Image img = new Image ("icons/pngwing.com (1).png");
+
+        Image img = new Image("icons/pngwing.com (1).png");
         Image imgback = new Image("icons/pngwing.com_2.png");
         ImageView imageViewBack = new ImageView(imgback);
         ImageView imageView = new ImageView(img);
@@ -87,31 +88,63 @@ public class MainScreen extends Application {
 
                     Platform.runLater(() -> {
                         secoundStage.close();
+
                         Stage threeStage = new Stage();
                         threeStage.getIcons().add(new Image("icons/preview-256.png"));
                         threeStage.setTitle("pear music");
                         Label lb = new Label("Three Stage");
                         lb.setAlignment(Pos.CENTER_LEFT);
                         StackPane root = new StackPane();
-
+                        controller.initialize();
                         Pane pane = new Pane();
                         ListView<String> listView = new ListView<>();
 
-                        ObservableList<String> items =FXCollections.observableArrayList();
-                        for (int i =0; i< controller.getSoungs().size(); i++){
-                        
-                        items.add(controller.getSoungs().get(i).getName());
-                        
+                        ObservableList<String> items = FXCollections.observableArrayList();
+                        for (int i = 0; i < controller.getSoungs().size(); i++) {
+
+                            items.add(controller.getSoungs().get(i).getName());
+
                         }
 
                         listView.setItems(items);
+
+                        listView.setOnMouseClicked(event -> {
+                            String selectedMusic = listView.getSelectionModel().getSelectedItem();
+                            if (selectedMusic != null) {
+                                String musicPath = "src/music" + File.separator + selectedMusic;
+                                Media media = new Media(new File(musicPath).toURI().toString());
+                                controller.getMediaPlayerReturn(media);
+                                
+
+                                if (m.player.getText().equals("play")) {
+                                    
+                                    controller.play();
+                                    m.soungLabel.setText(selectedMusic);
+
+                                    root.getChildren().remove(m.soungLabel);
+                                    root.getChildren().add(m.soungLabel);
+                                    m.player.setGraphic(imagePauseView);
+                                    
+                                    m.player.setText("pause");
+                                    System.out.println("player ");
+
+                                } else if (m.player.getText().equals("pause")) {
+                                    controller.pause();
+
+                                    m.player.setGraphic(imagePlayView);
+                                    m.player.setText("play");
+                                    System.out.println("pause");
+
+                                }
+                            }
+                        });
                         Pane vb = new Pane(listView);
                         listView.setPrefHeight(350);
                         listView.setPrefWidth(150);
                         vb.setPrefHeight(350);
                         vb.setPrefWidth(150);
                         AnchorPane an = new AnchorPane();
-                       
+
                         pane.setPrefHeight(40);
                         pane.setPrefWidth(800);
 
@@ -155,15 +188,13 @@ public class MainScreen extends Application {
                         m.player.setTranslateX(385);
                         m.player.setTranslateY(2);
                         m.soungLabel.setTranslateY(233);
-                       
+
                         an.getChildren().add(pane);
-                       
-                        
+
                         pane.getChildren().addAll(m.next, m.player, m.back);
                         root.getChildren().add(an);
                         root.getChildren().addAll(lb, m.soungLabel);
-                        root.getChildren().addAll( vb, pane);
-                     
+                        root.getChildren().addAll(vb, pane);
 
                         m.next.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -185,16 +216,17 @@ public class MainScreen extends Application {
 
                             @Override
                             public void handle(ActionEvent event) {
+
                                 if (m.player.getText().equals("play")) {
 
                                     controller.play();
-                                    m.soungLabel
-                                            .setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
+                                    m.soungLabel.setText(controller.getSoungs().get(controller.getSoundNumber()).getName());
                                     m.player.setGraphic(imagePauseView);
                                     m.player.setText("pause");
                                     System.out.println("player ");
 
                                 } else if (m.player.getText().equals("pause")) {
+
                                     controller.pause();
                                     m.player.setGraphic(imagePlayView);
                                     m.player.setText("play");

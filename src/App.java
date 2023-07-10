@@ -21,6 +21,7 @@ public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
     Button btn = new Button("Sign in");
 
     @Override
@@ -86,10 +87,10 @@ public class App extends Application {
                             public void run() {
                                 try {
                                     Thread.sleep(2010);
-                                  
+
                                     Platform.runLater(() -> {
-                                         primaryStage.close();
-                                         m.start(s);
+                                        primaryStage.close();
+                                        m.start(s);
                                     });
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
@@ -103,7 +104,8 @@ public class App extends Application {
                     }
                 } else {
                     Alert alert = new Alert(AlertType.INFORMATION);
-                    ((Stage)alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("icons/preview-256.png"));
+                    ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons()
+                            .add(new Image("icons/preview-256.png"));
                     alert.setTitle("Error");
                     alert.setHeaderText(null);
                     alert.setContentText("senha ou usuario incorretos.");

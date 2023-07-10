@@ -53,7 +53,6 @@ public class controllerMedia implements Initializable {
             for (File file : files) {
                 soungs.add(file);
                 System.out.println(file);
-                
 
             }
         }
@@ -71,15 +70,12 @@ public class controllerMedia implements Initializable {
 
     public void play() {
 
-        duration = mediaPlayer.getCurrentTime();
-        mediaPlayer.seek(duration);
         mediaPlayer.play();
 
     }
 
     public void pause() {
-        duration = mediaPlayer.getCurrentTime();
-        mediaPlayer.seek(duration);
+
         mediaPlayer.stop();
 
     }
@@ -119,9 +115,9 @@ public class controllerMedia implements Initializable {
                     lastNumber = i;
 
                 }
-                System.out.println(lastNumber +" last number");
+                System.out.println(lastNumber + " last number");
                 soundNumber = lastNumber;
-                System.out.println(soundNumber+ " soundnumber");
+                System.out.println(soundNumber + " soundnumber");
             } else {
                 soundNumber--;
             }
@@ -150,8 +146,19 @@ public class controllerMedia implements Initializable {
     public int getSoundNumber() {
         return soundNumber;
     }
-    public ArrayList getSoungList(){
+
+    public ArrayList getSoungList() {
         return soungs;
+    }
+
+    public void getMediaPlayerReturn(Media media) {
+        mediaPlayer.pause();
+        mediaPlayer = new MediaPlayer(media);
+        m.soungLabel.setText(soungs.get(soundNumber).getName());
+    }
+
+    public void getmMediaPlayer(Media mediaPlayer) {
+        this.midia = mediaPlayer;
     }
 
 }
