@@ -2,17 +2,12 @@
 
 User and Password default: admin admin.
 
-## Folder Structure
+**Pier Music: A Experiência Musical em Sua Mesa**
 
-The workspace contains two folders by default, where:
+Pier Music é um aplicativo desktop desenvolvido em JavaFX, especialmente criado para os amantes da música que buscam uma experiência única e envolvente no mundo da reprodução de áudio. Com uma interface interativa e recursos inovadores, o Pier Music redefine a forma como os usuários interagem e desfrutam de suas faixas musicais favoritas.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+**Interface Interativa e Intuitiva:**
+O Pier Music apresenta uma interface moderna e elegante, projetada com foco na usabilidade e facilidade de navegação. Com um design limpo e organizado, o aplicativo permite que os usuários encontrem suas músicas rapidamente e controlem a reprodução de forma intuitiva. A disposição dos botões e controles é cuidadosamente pensada para oferecer uma experiência fluente e agradável.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+Obs: Ainda estou trabalhando em atualizações futuras para esse aplicativo.
+Loading.....
