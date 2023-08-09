@@ -1,4 +1,4 @@
-## Getting Started
+## PEAR MUSIC
 
 User and Password default: admin admin.
 
